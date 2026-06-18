@@ -82,8 +82,8 @@ func runTests() {
 			expected: 2,
 		},
 		{
-			input:    "abcdbcabdbcbasbdbcbabsbdbcbasbdasbcbasbdassabbcbasdbascbcbsdabcbaskhmgnfjetyascbabsvcbavcbasvqwertyuioplkjhmnbgcvdfsahgjnabshgjsbdnasbgnb",
-			expected: 2,
+			input:    "abcdbcabdbcbasbdbcbabsbdbcbasbdasbcbasbdassabbcbasdbascbcbsdabcbaskhmgnfjetyascbabsvcbavcbasvqwertyuioplkjhmnbgcvdfsahgjnabshgjsbdnasbgnbc",
+			expected: 24,
 		},
 	}
 
