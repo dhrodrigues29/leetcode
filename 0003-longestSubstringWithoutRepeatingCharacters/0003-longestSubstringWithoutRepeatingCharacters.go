@@ -81,6 +81,10 @@ func runTests() {
 			input:    "abba",
 			expected: 2,
 		},
+		{
+			input:    "abcdbcabdbcbasbdbcbabsbdbcbasbdasbcbasbdassabbcbasdbascbcbsdabcbaskhmgnfjetyascbabsvcbavcbasvqwertyuioplkjhmnbgcvdfsahgjnabshgjsbdnasbgnb",
+			expected: 2,
+		},
 	}
 
 	for i, tc := range tests {
