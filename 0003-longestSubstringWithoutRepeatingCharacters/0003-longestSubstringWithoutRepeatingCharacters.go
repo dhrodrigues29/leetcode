@@ -75,7 +75,7 @@ func runTests() {
 		},
 		{
 			input:    "abcdefgcnmkl",
-			expected: 7,
+			expected: 9,
 		},
 		{
 			input:    "abba",
