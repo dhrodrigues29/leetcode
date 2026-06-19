@@ -7,6 +7,10 @@ import (
 
 func longestPalindrome(s string) string {
 
+	for i := 0; i < len(s); i++ {
+		fmt.Println("index:", i, "value:", string(s[i]))
+	}
+
 	return s
 }
 
