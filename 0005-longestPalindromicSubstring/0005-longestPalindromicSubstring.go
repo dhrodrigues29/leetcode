@@ -5,36 +5,36 @@ import (
 	"reflect"
 )
 
-func longestPalindrome(s string) int {
+func longestPalindrome(s string) string {
 
-	maxLen := 1
-	currentMaxLen := 1
+	maxLenSubstring := ""
 
 	for i := 0; i < len(s); i++ {
-		if i == 0 && i+1 != len(s) {
-			for string(s[i]) == string(s[i+1]) {
-				currentMaxLen += 1
-				i++
-				if i >= len(s) {
-					break
-				}
-			}
-			maxLen = currentMaxLen
-			currentMaxLen = 1
-		}
 
-		for j := 1; j < len(s); j++ {
-			if !(i-j < 0 || i+j-1 >= len(s)) {
-				if string(s[i-j]) == string(s[i+j-1]) {
-					currentMaxLen += 2
-					if currentMaxLen > maxLen {
-						maxLen = currentMaxLen
-					}
-				}
+		current := string(s[i])
+
+		for j := 1; ; j++ {
+
+			left := i - j
+			right := i + j
+
+			if left < 0 || right >= len(s) {
+				break
+			}
+
+			if s[left] != s[right] {
+				break
+			}
+
+			current = string(s[left]) + current + string(s[right])
+
+			if len(current) > len(maxLenSubstring) {
+				maxLenSubstring = current
 			}
 		}
 	}
-	return maxLen
+
+	return maxLenSubstring
 }
 
 type testCase struct {
@@ -50,16 +50,20 @@ func runTests() {
 			expected: "bab",
 		},
 		{
-			input:    "cbbd",
-			expected: "bb",
+			input:    "aaaaaaababad",
+			expected: "aaaaaaa",
+		},
+		{
+			input:    "cbbbd",
+			expected: "bbb",
 		},
 		{
 			input:    "asdfghjkllkjhgfdsa",
-			expected: "asdfghjkl",
+			expected: "asdfghjkllkjhgfdsa",
 		},
 		{
-			input:    "olskdmbqwertyytrewqurijam",
-			expected: "qwerty",
+			input:    "olskdmbqwertyytrwequrijam",
+			expected: "qwertyytrewq",
 		},
 	}
 
@@ -72,8 +76,8 @@ func runTests() {
 		} else {
 			fmt.Printf("Test %d FAILED\n", i+1)
 			fmt.Printf("Nums1:    %v\n", tc.input)
-			fmt.Printf("Expected: %.5f\n", tc.expected)
-			fmt.Printf("Got:      %.5f\n", result)
+			fmt.Printf("Expected: %v\n", tc.expected)
+			fmt.Printf("Got:      %v\n", result)
 		}
 	}
 }
