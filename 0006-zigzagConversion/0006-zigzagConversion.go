@@ -7,9 +7,39 @@ import (
 
 func convert(s string, numRows int) string {
 
-	// TODO: implement
+	if numRows == 1 || len(s) == 1 {
+		return s
+	}
 
-	return ""
+	rows := make([]string, numRows)
+
+	currentRow := 0
+	goingDown := true
+
+	for i := 0; i < len(s); i++ {
+
+		rows[currentRow] += string(s[i])
+
+		if currentRow == numRows-1 {
+			goingDown = false
+		} else if currentRow == 0 {
+			goingDown = true
+		}
+
+		if goingDown {
+			currentRow++
+		} else {
+			currentRow--
+		}
+	}
+
+	result := ""
+
+	for _, row := range rows {
+		result += row
+	}
+
+	return result
 }
 
 type testCase struct {
