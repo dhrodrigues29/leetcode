@@ -7,34 +7,41 @@ import (
 
 func longestPalindrome(s string) string {
 
-	maxLenSubstring := ""
+	if len(s) <= 1 {
+		return s
+	}
 
-	for i := 0; i < len(s); i++ {
+	start := 0
+	maxLen := 1
 
-		current := string(s[i])
+	expand := func(left, right int) {
 
-		for j := 1; ; j++ {
+		for left >= 0 &&
+			right < len(s) &&
+			s[left] == s[right] {
 
-			left := i - j
-			right := i + j
+			currentLen := right - left + 1
 
-			if left < 0 || right >= len(s) {
-				break
+			if currentLen > maxLen {
+				maxLen = currentLen
+				start = left
 			}
 
-			if s[left] != s[right] {
-				break
-			}
-
-			current = string(s[left]) + current + string(s[right])
-
-			if len(current) > len(maxLenSubstring) {
-				maxLenSubstring = current
-			}
+			left--
+			right++
 		}
 	}
 
-	return maxLenSubstring
+	for i := 0; i < len(s); i++ {
+
+		// odd center
+		expand(i, i)
+
+		// even center
+		expand(i, i+1)
+	}
+
+	return s[start : start+maxLen]
 }
 
 type testCase struct {
@@ -63,7 +70,7 @@ func runTests() {
 		},
 		{
 			input:    "olskdmbqwertyytrwequrijam",
-			expected: "qwertyytrewq",
+			expected: "rtyytr",
 		},
 	}
 
