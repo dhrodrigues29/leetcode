@@ -19,7 +19,7 @@ func reverse(x int) int {
 		isNegative = true
 	}
 
-	if x > 4294967295 || -x > 4294967295 {
+	if x > 2147483648 || -x > 2147483648 {
 		return 0
 	}
 
@@ -44,11 +44,11 @@ func reverse(x int) int {
 		reverseInteger = -reverseInteger
 	}
 
-	if reverseInteger < -4294967295 {
+	if reverseInteger < -2147483648 {
 		return 0
 	}
 
-	if reverseInteger > 4294967295 {
+	if reverseInteger > 2147483648 {
 		return 0
 	}
 
@@ -110,6 +110,10 @@ func runTests() {
 		{
 			input:    -1463847412, // valid reverse
 			expected: -2147483641,
+		},
+		{
+			input:    1563847412, // overflow when reversed
+			expected: 0,
 		},
 	}
 
