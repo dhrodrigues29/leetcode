@@ -7,9 +7,52 @@ import (
 
 func reverse(x int) int {
 
-	// TODO: Implement solution
+	reverseInteger := 0
+	isNegative := false
 
-	return 0
+	if x == 0 {
+		return x
+	}
+
+	if x < 0 {
+		x = -x
+		isNegative = true
+	}
+
+	if x > 4294967295 || -x > 4294967295 {
+		return 0
+	}
+
+	for i := 0; x > 0; i++ {
+
+		digit := x % 10
+
+		if x/10 < 0 {
+			return reverseInteger
+		}
+
+		reverseInteger = reverseInteger + digit
+		reverseInteger = reverseInteger * 10
+
+		x = x / 10
+
+	}
+
+	reverseInteger = reverseInteger / 10
+
+	if isNegative {
+		reverseInteger = -reverseInteger
+	}
+
+	if reverseInteger < -4294967295 {
+		return 0
+	}
+
+	if reverseInteger > 4294967295 {
+		return 0
+	}
+
+	return reverseInteger
 }
 
 type testCase struct {
