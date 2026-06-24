@@ -7,9 +7,71 @@ import (
 
 func myAtoi(s string) int {
 
-	// TODO: Implement solution
+	i := 0
+	result := 0
+	isNegative := false
+	charSeen := false
 
-	return 0
+	for i < len(s) {
+
+		if charSeen == false {
+
+			//spaces only matters with no char have been seen yet
+			if s[i] == ' ' {
+				i++
+				continue
+			}
+
+			if s[i] == '+' {
+				charSeen = true
+				i++
+				continue
+			}
+
+			if s[i] == '-' {
+				charSeen = true
+				isNegative = true
+				i++
+				continue
+			}
+
+		}
+
+		if s[i] < '0' || s[i] > '9' {
+			if isNegative {
+				return -result
+			}
+			return result
+		}
+
+		if s[i] >= '0' && s[i] <= '9' {
+			digit := int(s[i] - '0')
+
+			if !isNegative {
+				if result > 214748364 ||
+					(result == 214748364 && digit > 7) {
+					return 2147483647
+				}
+			} else {
+				if result > 214748364 ||
+					(result == 214748364 && digit > 8) {
+					return -2147483648
+				}
+			}
+
+			result = result*10 + digit
+			charSeen = true
+		}
+
+		i++
+
+	}
+
+	if isNegative {
+		result = -result
+	}
+
+	return result
 }
 
 type testCase struct {
@@ -115,6 +177,10 @@ func runTests() {
 		{
 			input:    "-00000123",
 			expected: -123,
+		},
+		{
+			input:    "  -0012a42",
+			expected: -12,
 		},
 	}
 
