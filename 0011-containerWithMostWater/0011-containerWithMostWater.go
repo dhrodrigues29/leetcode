@@ -7,7 +7,37 @@ import (
 
 func maxArea(height []int) int {
 
-	return 0
+	if len(height) < 2 {
+		return 0
+	}
+
+	highestVolume := 0
+
+	for i := 0; i < (len(height) - 1); i++ {
+
+		if i+1 >= len(height) {
+			return highestVolume
+		}
+
+		currentLeft := height[i]
+
+		for j := 1; j < len(height); j++ {
+
+			currentRight := height[j]
+
+			currentInterval := j - i
+
+			lower := min(currentRight, currentLeft)
+
+			if highestVolume < (lower * currentInterval) {
+				highestVolume = lower * currentInterval
+
+			}
+		}
+
+	}
+
+	return highestVolume
 
 }
 
