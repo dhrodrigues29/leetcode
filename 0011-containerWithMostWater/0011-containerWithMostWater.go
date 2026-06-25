@@ -13,26 +13,29 @@ func maxArea(height []int) int {
 
 	highestVolume := 0
 
-	for i := 0; i < (len(height) - 1); i++ {
+	i := 0
+	j := len(height) - 1
 
-		if i+1 >= len(height) {
-			return highestVolume
+	for i < j {
+
+		left := height[i]
+		right := height[j]
+		interval := j - i
+		currentHeight := min(left, right)
+
+		if highestVolume < currentHeight*interval {
+			highestVolume = currentHeight * interval
 		}
 
-		currentLeft := height[i]
+		if right > left {
+			i++
 
-		for j := 1; j < len(height); j++ {
+		} else {
+			j--
+		}
 
-			currentRight := height[j]
-
-			currentInterval := j - i
-
-			lower := min(currentRight, currentLeft)
-
-			if highestVolume < (lower * currentInterval) {
-				highestVolume = lower * currentInterval
-
-			}
+		if i >= j {
+			return highestVolume
 		}
 
 	}
