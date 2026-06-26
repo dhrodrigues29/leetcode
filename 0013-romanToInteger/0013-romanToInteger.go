@@ -25,7 +25,7 @@ func romanToInt(s string) int {
 
 		case 'C':
 			if i+1 >= len(s) {
-				valid = +100
+				valid += 100
 				continue
 			}
 			if s[i+1] == 'D' {
@@ -46,7 +46,7 @@ func romanToInt(s string) int {
 
 		case 'X':
 			if i+1 >= len(s) {
-				valid = +10
+				valid += 10
 				continue
 			}
 			if s[i+1] == 'L' {
