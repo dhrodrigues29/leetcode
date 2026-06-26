@@ -25,139 +25,66 @@ func intToRoman(num int) string {
 	for i := 0; i < len(numStr); i++ {
 
 		digit := int(numStr[i] - '0')
-		if digit == 4 {
 
-			if multiplier == 100 {
-				currentStr = currentStr + "CD"
-			}
+		// Determine the Roman symbols for this decimal place.
+		one := ""
+		five := ""
+		ten := ""
 
-			if multiplier == 10 {
-				currentStr = currentStr + "XL"
-			}
+		switch multiplier {
+		case 1000:
+			one = "M"
 
-			if multiplier == 1 {
-				currentStr = currentStr + "IV"
-			}
+		case 100:
+			one = "C"
+			five = "D"
+			ten = "M"
 
-			multiplier /= 10
-			continue
+		case 10:
+			one = "X"
+			five = "L"
+			ten = "C"
+
+		case 1:
+			one = "I"
+			five = "V"
+			ten = "X"
 		}
 
-		if digit == 9 {
+		switch {
 
-			if multiplier == 100 {
-				currentStr = currentStr + "CM"
+		case digit == 0:
+			// Nothing to append.
+
+		case digit == 4:
+			currentStr += one + five
+
+		case digit == 9:
+			currentStr += one + ten
+
+		case digit == 5:
+			currentStr += five
+
+		case digit > 5:
+			add := five
+
+			for j := 5; j < digit; j++ {
+				add += one
 			}
 
-			if multiplier == 10 {
-				currentStr = currentStr + "XC"
+			currentStr += add
+
+		case digit < 4:
+			add := ""
+
+			for j := 0; j < digit; j++ {
+				add += one
 			}
 
-			if multiplier == 1 {
-				currentStr = currentStr + "IX"
-			}
-
-			multiplier /= 10
-			continue
-		}
-		if digit == 5 {
-
-			if multiplier == 100 {
-				currentStr = currentStr + "D"
-			}
-
-			if multiplier == 10 {
-				currentStr = currentStr + "L"
-			}
-
-			if multiplier == 1 {
-				currentStr = currentStr + "V"
-			}
-
-			multiplier /= 10
-			continue
-		}
-		if digit > 5 && digit < 9 {
-
-			if multiplier == 100 {
-				add := "D"
-				digitNew := digit
-				for digitNew > 5 {
-					add = add + "C"
-					digitNew--
-				}
-				currentStr = currentStr + add
-			}
-
-			if multiplier == 10 {
-				add := "L"
-				digitNew := digit
-				for digitNew > 5 {
-					add = add + "X"
-					digitNew--
-				}
-				currentStr = currentStr + add
-			}
-
-			if multiplier == 1 {
-				add := "V"
-				digitNew := digit
-				for digitNew > 5 {
-					add = add + "I"
-					digitNew--
-				}
-				currentStr = currentStr + add
-			}
-
-			multiplier /= 10
-			continue
-		}
-		if digit < 4 {
-
-			if multiplier == 1000 {
-				add := ""
-				digitNew := digit
-				for digitNew > 0 {
-					add = add + "M"
-					digitNew--
-				}
-				currentStr = currentStr + add
-			}
-
-			if multiplier == 100 {
-				add := ""
-				digitNew := digit
-				for digitNew > 0 {
-					add = add + "C"
-					digitNew--
-				}
-				currentStr = currentStr + add
-			}
-
-			if multiplier == 10 {
-				add := ""
-				digitNew := digit
-				for digitNew > 0 {
-					add = add + "X"
-					digitNew--
-				}
-				currentStr = currentStr + add
-			}
-
-			if multiplier == 1 {
-				add := ""
-				digitNew := digit
-				for digitNew > 0 {
-					add = add + "I"
-					digitNew--
-				}
-				currentStr = currentStr + add
-			}
-
-			multiplier /= 10
-			continue
+			currentStr += add
 		}
 
+		multiplier /= 10
 	}
 
 	return currentStr
