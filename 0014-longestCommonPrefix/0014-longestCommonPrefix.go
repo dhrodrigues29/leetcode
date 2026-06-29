@@ -7,7 +7,42 @@ import (
 
 func longestCommonPrefix(strs []string) string {
 
-	return ""
+	if len(strs) == 0 {
+		return ""
+	}
+
+	if len(strs) == 1 {
+		return strs[0]
+	}
+
+	currentLongestPrefix := strs[0]
+
+	for i := 0; i < len(strs)-1; i++ {
+
+		currentString := currentLongestPrefix
+		nextString := strs[i+1]
+
+		newPrefix := ""
+		limit := min(len(currentString), len(nextString))
+
+		for j := 0; j < limit; j++ {
+
+			if currentString[j] != nextString[j] {
+				break
+			}
+
+			newPrefix += string(currentString[j])
+		}
+
+		currentLongestPrefix = newPrefix
+
+		if currentLongestPrefix == "" {
+			return ""
+		}
+
+	}
+
+	return currentLongestPrefix
 }
 
 type testCase struct {
