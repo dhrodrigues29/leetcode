@@ -2,9 +2,60 @@ package main
 
 import (
 	"fmt"
+	"sort"
 )
 
 func threeSumClosest(nums []int, target int) int {
+
+	if len(nums) < 3 {
+		return 0
+	}
+
+	//create return variable
+	closest := nums[0] + nums[1] + nums[2]
+
+	//sort the array
+	sort.Ints(nums)
+
+	for i := 0; i < len(nums); i++ {
+
+		left := i + 1
+		right := len(nums) - 1
+
+		for left < right {
+
+			sum := nums[i] + nums[left] + nums[right]
+
+			if sum == target {
+				return sum
+			}
+
+			if sum < target {
+				left++
+
+			} else if sum > target {
+				right--
+			}
+
+			currentDiff := sum - target
+			if currentDiff < 0 {
+				currentDiff = -currentDiff
+			}
+
+			closestDiff := closest - target
+			if closestDiff < 0 {
+				closestDiff = -closestDiff
+			}
+
+			if currentDiff < closestDiff {
+				closest = sum
+			}
+
+		}
+
+	}
+
+	return closest
 
 }
 
@@ -90,7 +141,7 @@ func runTests() {
 		{
 			input:    []int{-2, 0, 1, 2},
 			target:   2,
-			expected: 3,
+			expected: 1,
 		},
 		{
 			input:    []int{-4, -1, 1, 2},
@@ -115,7 +166,7 @@ func runTests() {
 		{
 			input:    []int{-10, -5, -2, 0, 4, 8, 12},
 			target:   7,
-			expected: 6,
+			expected: 7,
 		},
 	}
 
