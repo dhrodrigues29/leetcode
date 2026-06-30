@@ -8,6 +8,58 @@ import (
 
 func threeSum(nums []int) [][]int {
 
+	//create return variable
+	validTriplets := [][]int{}
+
+	//sort the array
+	sort.Ints(nums)
+
+	for i := 0; i < len(nums); i++ {
+
+		if nums[i] > 0 {
+			break
+		}
+
+		if i > 0 && nums[i] == nums[i-1] {
+			continue
+		}
+
+		left := i + 1
+		right := len(nums) - 1
+
+		for left < right {
+
+			sum := nums[i] + nums[left] + nums[right]
+
+			if sum < 0 {
+				left++
+
+			} else if sum > 0 {
+				right--
+
+			} else {
+				validTriplets = append(validTriplets,
+					[]int{nums[i], nums[left], nums[right]},
+				)
+
+				left++
+				right--
+
+				for left < right && nums[left] == nums[left-1] {
+					left++
+				}
+
+				for left < right && nums[right] == nums[right+1] {
+					right--
+				}
+			}
+
+		}
+
+	}
+
+	return validTriplets
+
 }
 
 type testCase struct {
@@ -70,7 +122,7 @@ func runTests() {
 		},
 		{
 			input:    []int{-4, -2, -2, 0, 1, 2, 2, 4},
-			expected: [][]int{{-4, 0, 4}, {-4, 2, 2}, {-2, 0, 2}},
+			expected: [][]int{{-4, 0, 4}, {-4, 2, 2}, {-2, -2, 4}, {-2, 0, 2}},
 		},
 		{
 			input:    []int{3, -2, 1, 0},
@@ -106,15 +158,15 @@ func runTests() {
 		},
 		{
 			input:    []int{-7, -3, -2, 5, 10, -8},
-			expected: [][]int{{-8, -2, 10}},
+			expected: [][]int{{-8, -2, 10}, {-7, -3, 10}, {-3, -2, 5}},
 		},
 		{
 			input:    []int{-6, -1, 0, 1, 2, 4},
-			expected: [][]int{{-1, 0, 1}, {-6, 2, 4}},
+			expected: [][]int{{-6, 2, 4}, {-1, 0, 1}},
 		},
 		{
 			input:    []int{-10, -7, -3, 0, 3, 7, 10},
-			expected: [][]int{{-10, 0, 10}, {-10, 3, 7}, {-7, 0, 7}, {-3, 0, 3}},
+			expected: [][]int{{-10, 0, 10}, {-10, 3, 7}, {-7, -3, 10}, {-7, 0, 7}, {-3, 0, 3}},
 		},
 	}
 
