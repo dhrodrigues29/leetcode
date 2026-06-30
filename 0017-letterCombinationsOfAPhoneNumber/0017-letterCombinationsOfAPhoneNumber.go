@@ -6,7 +6,51 @@ import (
 	"sort"
 )
 
+func combine(current []string, letters []string) []string {
+
+	newCombinations := []string{}
+
+	for _, prefix := range current {
+		for _, letter := range letters {
+			newCombinations = append(newCombinations, prefix+letter)
+		}
+	}
+
+	return newCombinations
+}
+
 func letterCombinations(digits string) []string {
+
+	if len(digits) == 0 {
+		return []string{}
+	}
+
+	combinations := []string{}
+
+	phone := map[byte][]string{
+		'2': {"a", "b", "c"},
+		'3': {"d", "e", "f"},
+		'4': {"g", "h", "i"},
+		'5': {"j", "k", "l"},
+		'6': {"m", "n", "o"},
+		'7': {"p", "q", "r", "s"},
+		'8': {"t", "u", "v"},
+		'9': {"w", "x", "y", "z"},
+	}
+
+	for i := 0; i < len(digits); i++ {
+
+		letters := phone[digits[i]]
+
+		if i == 0 {
+			combinations = append([]string{}, letters...)
+			continue
+		}
+
+		combinations = combine(combinations, letters)
+	}
+
+	return combinations
 
 }
 
