@@ -12,7 +12,38 @@ type ListNode struct {
 
 func removeNthFromEnd(head *ListNode, n int) *ListNode {
 
-	return nil
+	if head == nil {
+		return nil
+	}
+
+	fastPointer := head
+	slowPointer := head
+
+	// phase 1, move fast ahead
+	for i := 0; i < n; i++ {
+
+		if fastPointer == nil {
+			return nil
+		}
+
+		fastPointer = fastPointer.Next
+	}
+
+	if fastPointer == nil {
+		return head.Next
+	}
+
+	// phase 2, move both pointers
+	for fastPointer.Next != nil {
+
+		slowPointer = slowPointer.Next
+		fastPointer = fastPointer.Next
+	}
+
+	slowPointer.Next = slowPointer.Next.Next
+
+	return head
+
 }
 
 type testCase struct {
