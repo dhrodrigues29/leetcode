@@ -8,6 +8,63 @@ import (
 
 func fourSum(nums []int, target int) [][]int {
 
+	quadruplets := [][]int{}
+
+	if len(nums) < 4 {
+		return quadruplets
+	}
+
+	sort.Ints(nums)
+
+	for i := 0; i < len(nums)-3; i++ {
+
+		if i > 0 && nums[i] == nums[i-1] {
+			continue
+		}
+
+		for j := i + 1; j < len(nums)-2; j++ {
+
+			if j > i+1 && nums[j] == nums[j-1] {
+				continue
+			}
+
+			left := j + 1
+			right := len(nums) - 1
+
+			for left < right {
+
+				sum := nums[i] + nums[j] + nums[left] + nums[right]
+
+				if sum < target {
+					left++
+
+				} else if sum > target {
+					right--
+
+				} else {
+					quadruplets = append(quadruplets,
+						[]int{nums[i], nums[j], nums[left], nums[right]},
+					)
+
+					left++
+					right--
+
+					for left < right && nums[left] == nums[left-1] {
+						left++
+					}
+
+					for left < right && nums[right] == nums[right+1] {
+						right--
+					}
+				}
+
+			}
+
+		}
+
+	}
+
+	return quadruplets
 }
 
 type testCase struct {
@@ -110,7 +167,7 @@ func runTests() {
 		{
 			input:    []int{-4, -1, -1, 0, 1, 2},
 			target:   -4,
-			expected: [][]int{{-4, -1, -1, 2}},
+			expected: [][]int{{-4, -1, -1, 2}, {-4, -1, 0, 1}},
 		},
 		{
 			input:    []int{5, 5, 3, 5, 1, -5, 1, -2},
